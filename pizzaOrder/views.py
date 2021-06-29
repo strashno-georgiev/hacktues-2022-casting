@@ -1,11 +1,23 @@
+from pizzaApp.pizzaOrder.models import Person
 from django.shortcuts import render
 from django.http import HttpResponse
+from .forms import PersonForm
+from .models import Person
 # Create your views here.
 def index(request):
     return render(request, "pizzaOrder/index.html")
 
 def create_user(request):
-    return render(request, "pizzaOrder/create_user.html")
+    if(request.method == "POST"):
+        form = PersonForm(request.POST)
+        if(form.is_valid):
+            form.save()
+    else:
+        context = {}
+        form = PersonForm()
+        context['form'] = form
+        return render(request, "pizzaOrder/create_user.html", context)
+
 def create_pizza(request):
     pass
 

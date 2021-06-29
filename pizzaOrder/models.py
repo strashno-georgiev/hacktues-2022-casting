@@ -1,11 +1,6 @@
 from django.db import models
 
 # Create your models here.
-class Person(models.Model):
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    address = models.CharField(max_length=100)
-
 class Topping(models.Model):
     name = models.CharField(max_length=50)
     description = models.CharField(max_length=200, blank=True)
@@ -26,3 +21,4 @@ class Pizza(models.Model):
 
 class Order(models.Model):
     person = models.ForeignKey("Person", on_delete=models.CASCADE)
+    address = models.CharField(max_length=100)
