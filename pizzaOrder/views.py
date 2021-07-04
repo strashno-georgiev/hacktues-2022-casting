@@ -1,8 +1,9 @@
+from django.db.models.query import QuerySet
 from django.forms.models import model_to_dict
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from .forms import OrderForm, FlourForm, SauceForm, ToppingForm
-from .models import Order, Topping, Flour, Sauce
+from .forms import OrderForm, FlourForm, SauceForm, ToppingForm, ToppingsSelectForm
+from .models import Order, Topping, Flour, Sauce, Pizza
 import json
 from django.core.serializers.json import DjangoJSONEncoder
 from django.core import serializers
@@ -15,13 +16,37 @@ def queryset_to_dicts(queryset):
     return models
 # Create your views here.
 def index(request):
-    return render(request, "pizzaOrder/index.html")
+    orders = Order.objects.all()
+    context = {}
+    pizzas = {}
+    if(len(orders) == 0):
+        context['none'] = True
+    for order in orders:
+        order_key = str(order.id)
+        pizzas[order_key] = []
+        pizzas[order_key].append(order)
+        pizzas[order_key].append(Pizza.objects.filter(order__id=order.id))
+    context['orders'] = pizzas
+    return render(request, "pizzaOrder/index.html", context)
 
 def create_order(request):    
     if(request.method == "POST"):
-        form = OrderForm(request.POST)
+        form = OrderForm(request.POST['address'], request.POST['last_name'])
         if(form.is_valid):
-            form.save()
+            new_order = Order(address=request.POST['address'], last_name=request.POST['last_name'])
+            new_order.save()
+            pizza_count = (len(request.POST) - 3) // 3
+            for i in range(1, pizza_count+1):
+                dough_flour = Flour.objects.get(id=request.POST["dough_flour" + str(i)])
+                sauce = Sauce.objects.get(id=request.POST["sauce" + str(i)])
+                new_pizza = Pizza(sauce=sauce, dough_flour=dough_flour, order=new_order)
+                new_pizza.save()
+                print("\nrequest.POST on toppings is:\n" + request.POST['toppings1[]'])
+
+                for topping_id in request.POST['toppings' + str(i) + "[]"]:
+                    new_pizza.toppings.add(topping_id)
+
+            return redirect("home")
     else:
         def objects_to_json(objects):
             json = serializers.serialize('json', objects, cls=DjangoJSONEncoder)
@@ -29,14 +54,26 @@ def create_order(request):
         
         context = {}
         order_form = OrderForm()
+        toppings_form = ToppingsSelectForm()
         context['order_form'] = order_form
+        context['toppings_form'] = toppings_form
         context['flours_json'] = objects_to_json(Flour.objects.all())
         context['sauces_json'] = objects_to_json(Sauce.objects.all())
         context['toppings_json'] = objects_to_json(Topping.objects.all())
 
 
         return render(request, "pizzaOrder/create_order.html", context)
+def delete_order(request, pk):
 
+    order = Order.objects.get(id=pk)
+    if(request.method == "POST"):
+        order.delete()
+        return redirect("home")
+    context = {}
+    context['order'] = order
+    return render(request, "pizzaOrder/delete_order.html", context)
+
+    
 def add_topping(request):
     if(request.method == "POST"):
         form = ToppingForm(request.POST)
