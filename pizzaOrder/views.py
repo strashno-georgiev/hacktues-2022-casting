@@ -88,13 +88,31 @@ def view_sauces(request):
 
 
 def delete_topping(request, pk):
-    pass
+    topping = Topping.objects.get(id=pk)
+    if(request.method == "POST"):
+        topping.delete()
+        return redirect("topping-view")
+    context = {}
+    context['topping'] = topping
+    return render(request, "pizzaOrder/delete_topping.html", context)
 
 def delete_flour(request, pk):
-    pass
+    flour = Flour.objects.get(id=pk)
+    if(request.method == "POST"):
+        flour.delete()
+        return redirect("flour-view")
+    context = {}
+    context['flour'] = flour
+    return render(request, "pizzaOrder/delete_flour.html", context)
 
 def delete_sauce(request, pk):
-    pass
+    sauce = Sauce.objects.get(id=pk)
+    if(request.method == "POST"):
+        sauce.delete()
+        return redirect("sauce-view")
+    context = {}
+    context['sauce'] = sauce
+    return render(request, "pizzaOrder/delete_sauce.html", context)
 
 def update_topping(request, pk):
     topping = Topping.objects.get(id=pk)
