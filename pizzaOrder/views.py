@@ -97,7 +97,17 @@ def delete_sauce(request, pk):
     pass
 
 def update_topping(request, pk):
-    pass
+    topping = Topping.objects.get(id=pk)
+    if(request.method == "POST"):
+        form = ToppingForm(request.POST)
+        if(form.is_valid):
+            topping.name = request.POST['name']
+            topping.description = request.POST['description']
+            topping.save()
+            return redirect("topping-view")
+    context = {}
+    context['topping'] = topping
+    return render(request, "pizzaOrder/update_topping.html", context)
 
 def update_flour(request, pk):
     flour = Flour.objects.get(id=pk)
@@ -113,4 +123,14 @@ def update_flour(request, pk):
     return render(request, "pizzaOrder/update_flour.html", context)
 
 def update_sauce(request, pk):
-    pass
+    sauce = Sauce.objects.get(id=pk)
+    if(request.method == "POST"):
+        form = SauceForm(request.POST)
+        if(form.is_valid):
+            sauce.name = request.POST['name']
+            sauce.description = request.POST['description']
+            sauce.save()
+            return redirect("sauce-view")
+    context = {}
+    context['sauce'] = sauce
+    return render(request, "pizzaOrder/update_sauce.html", context)

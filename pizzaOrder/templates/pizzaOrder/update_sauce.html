@@ -1,0 +1,13 @@
+{%extends "pizzaOrder/base.html"%}
+{% block content%}
+    <a href={%url "home"%}>Back to home menu</a><br/>
+    <form method="POST" action="">
+        {%csrf_token%}
+        Sauce type:<br/>
+        <input value={{sauce.name}} name="name" type="text" required maxlength="50">
+        <br/>
+        Sauce description:<br/>
+        <textarea name="description" rows="4" cols="50">{{sauce.description}}</textarea>
+        <input type="submit" value="Update">
+    </form>
+{%endblock%}
