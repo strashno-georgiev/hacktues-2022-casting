@@ -9,7 +9,8 @@
         {%for sauce in sauces%}
             <div>
                 <h4>{{sauce.name}}</h4>
-                <a style="color:red;" href={% url "delete-sauce"%}>Delete sauce</a>
+                <a style="color:red;" href={% url "delete-sauce"%}/{{sauce.id}}>Delete</a>
+                <a style="color:blue;" href={% url "update-sauce"%}/{{sauce.id}}>Update</a>
                 <p>{{sauce.description}}</p>
             </div>
         {%endfor%}
