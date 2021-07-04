@@ -1,16 +1,14 @@
 from django import forms
-from .models import Person, Flour, Topping, Pizza
+from .models import Flour, Topping, Pizza, Order, Sauce
   
-  
-class PersonForm(forms.ModelForm):
+class OrderForm(forms.ModelForm):
   
     class Meta:
-        model = Person
+        model = Order
   
         fields = [
-            "first_name",
-            "last_name",
-            "address"
+            "address",
+            "last_name"
         ]
 
 class FlourForm(forms.ModelForm):
@@ -19,7 +17,17 @@ class FlourForm(forms.ModelForm):
         model = Flour
   
         fields = [
-            "grain",
+            "name",
+            "description"
+        ]
+
+class SauceForm(forms.ModelForm):
+  
+    class Meta:
+        model = Sauce
+  
+        fields = [
+            "name",
             "description"
         ]
 
