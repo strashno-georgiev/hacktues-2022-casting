@@ -87,20 +87,20 @@ def view_sauces(request):
     return render(request, "pizzaOrder/view_sauce.html", context)
 
 
-def delete_topping(request):
+def delete_topping(request, pk):
     pass
 
-def delete_flour(request):
+def delete_flour(request, pk):
     pass
 
-def delete_sauce(request):
+def delete_sauce(request, pk):
     pass
 
-def update_topping(request):
+def update_topping(request, pk):
     pass
 
-def update_flour(request):
+def update_flour(request, pk):
     pass
 
-def update_sauce(request):
+def update_sauce(request, pk):
     pass

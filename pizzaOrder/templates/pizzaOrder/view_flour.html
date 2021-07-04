@@ -9,8 +9,8 @@
         {%for flour in flours%}
             <div>
                 <h4>{{flour.name}}</h4>
-                <a style="color:red;" href={% url "delete-flour"%}/{{flour.id}}>Delete</a>
-                <a style="color:blue;" href={% url "update-flour"%}>/{{flour.id}}Update</a>
+                <a style="color:red;" href={% url "delete-flour" pk=flour.pk%}>Delete</a>
+                <a style="color:cyan;" href={% url "update-flour" pk=flour.pk%}>Update</a>
                 <p>{{flour.description}}</p>
             </div>
         {%endfor%}

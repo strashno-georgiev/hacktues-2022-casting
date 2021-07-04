@@ -9,8 +9,8 @@
         {%for topping in toppings%}
             <div>
                 <h4>{{topping.name}}</h4>
-                <a style="color:red;" href={% url "delete-topping"%}/{{topping.id}}>Delete</a>
-                <a style="color:blue;" href={% url "update-topping"%}/{{topping.id}}>Update</a>
+                <a style="color:red;" href={% url "delete-topping" pk=topping.pk%}>Delete</a>
+                <a style="color:cyan;" href={% url "update-topping" pk=topping.pk%}>Update</a>
                 <p>{{topping.description}}</p>
             </div>
         {%endfor%}
