@@ -2,10 +2,8 @@ from django import forms
 from .models import Flour, Topping, Pizza, Order, Sauce
   
 class OrderForm(forms.ModelForm):
-  
     class Meta:
         model = Order
-  
         fields = [
             "address",
             "last_name"
@@ -30,6 +28,11 @@ class SauceForm(forms.ModelForm):
             "name",
             "description"
         ]
+class ToppingsSelectForm(forms.Form):
+    OPTIONS = []
+    for topping in Topping.objects.all():
+        OPTIONS.append((topping.id, topping.name))
+    toppings = forms.MultipleChoiceField(widget=forms.SelectMultiple, choices=OPTIONS)
 
 class ToppingForm(forms.ModelForm):
   
