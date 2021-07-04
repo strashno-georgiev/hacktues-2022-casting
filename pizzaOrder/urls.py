@@ -16,5 +16,14 @@ Including another URLconf
 from django.urls import path, include
 from . import views
 urlpatterns = [
-    path('', views.index),
+    path('', views.index, name="home"),
+    path('new-order/', views.create_order, name="create-order"),
+    path('flours/', views.view_flours, name="flour-view"),
+    path('sauces/', views.view_sauces, name="sauce-view"),
+    path('toppings/', views.view_toppings, name="topping-view"),
+    path('new-flour/', views.add_flour, name="add-flour"),
+    path('new-sauce/', views.add_sauce, name="add-sauce"),
+    path('new-topping/', views.add_topping, name="add-topping"),
+
+
 ]
