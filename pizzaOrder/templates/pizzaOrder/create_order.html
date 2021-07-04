@@ -42,6 +42,7 @@
             if(multiple) {
                 input.name += "[]"
             }
+            input.required = true;
             input.id = input_name + pizza_count;
             input.multiple = multiple
             for(var i=0; i < options.length; i++) {
