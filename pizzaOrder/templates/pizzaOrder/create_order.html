@@ -1,0 +1,77 @@
+{% extends "pizzaOrder/base.html" %}
+
+{%block content%}
+    <h2>Provide information for your order</h2>
+    <div>
+        <form method="POST" action="">
+            {%csrf_token%}
+            <button type="button" id="pizza_add">Add pizza</button>
+            <div id="pizza-container">
+            </div>
+            {{order_form.as_p}}
+            <input type="submit"></input>
+        </form>
+    </div>
+    <script>
+        function capitalize(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
+
+        function add_label(container, input_id, text) {
+            var label = document.createElement("LABEL");
+            var text = document.createTextNode(text);
+            label.for = input_id
+            label.appendChild(text);
+            container.appendChild(label);
+        }
+
+        function create_option_list(options, input_name, container, label, multiple=false) {
+            var input = document.createElement("SELECT");
+            input.name = input_name;
+            input.id = input_name;
+            input.multiple = multiple
+            for(var i=0; i < options.length; i++) {
+                var option = document.createElement("OPTION");
+                var element = options[i].name;
+                option.value = element;
+                var option_text = document.createTextNode(capitalize(element));
+                option.appendChild(option_text);
+                input.appendChild(option);
+            }
+            add_label(container, input_name, label);
+            container.appendChild(input);          
+        }
+
+        function break_line(container, count=1) {
+            for(var i=0; i < count; i++) {
+                container.appendChild(document.createElement("BR"));
+            }
+        }
+
+        function create_pick_list(options, container, label) {
+            
+        }
+
+        var pizza_counter = 1;
+        const pizza_container = document.getElementById("pizza-container");
+        document.getElementById("pizza_add").addEventListener("click", () => {
+            var container = document.createElement("DIV");
+            var heading = document.createElement("H4");
+            var heading_text = document.createTextNode("Pizza " + pizza_counter);
+            heading.appendChild(heading_text);
+            container.appendChild(heading);
+
+            var flours = "{{flours_json}}";
+            create_option_list(JSON.parse(flours), "flour_type", container, "Flour type ");
+
+            break_line(container)
+
+            var sauces = "{{sauces_json}}";
+            create_option_list(JSON.parse(sauces), "sauce_type", container, "Sauce ");
+
+            pizza_container.appendChild(container);
+            pizza_counter++;
+        })
+    </script>
+{%endblock%}
