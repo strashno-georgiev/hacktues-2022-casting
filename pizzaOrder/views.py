@@ -23,17 +23,17 @@ def create_order(request):
         if(form.is_valid):
             form.save()
     else:
-        flours = Flour.objects.all()
-        flour_dicts = serializers.serialize('json', flours, cls=DjangoJSONEncoder)
+        def objects_to_json(objects):
+            json = serializers.serialize('json', objects, cls=DjangoJSONEncoder)
+            return json
         
-        sauces = Sauce.objects.all()
-        sauces_json = serializers.serialize('json', sauces, cls=DjangoJSONEncoder)
-
         context = {}
         order_form = OrderForm()
         context['order_form'] = order_form
-        context['flours_json'] = flour_dicts
-        context['sauces_json'] = sauces_json
+        context['flours_json'] = objects_to_json(Flour.objects.all())
+        context['sauces_json'] = objects_to_json(Sauce.objects.all())
+        context['toppings_json'] = objects_to_json(Topping.objects.all())
+
 
         return render(request, "pizzaOrder/create_order.html", context)
 

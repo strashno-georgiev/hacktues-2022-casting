@@ -1,6 +1,8 @@
 {% extends "pizzaOrder/base.html" %}
 
 {%block content%}
+    <a href={%url "home"%}>Back to home menu</a><br/>
+
     <h2>Provide information for your order</h2>
     <div>
         <form method="POST" action="">
@@ -18,6 +20,13 @@
         }
 
 
+        function break_line(container, count=1) {
+            for(var i=0; i < count; i++) {
+                container.appendChild(document.createElement("BR"));
+            }
+        }
+
+
         function add_label(container, input_id, text) {
             var label = document.createElement("LABEL");
             var text = document.createTextNode(text);
@@ -25,6 +34,7 @@
             label.appendChild(text);
             container.appendChild(label);
         }
+
 
         function create_option_list(options, input_name, container, label, multiple=false) {
             var input = document.createElement("SELECT");
@@ -40,18 +50,10 @@
                 input.appendChild(option);
             }
             add_label(container, input_name, label);
+            break_line(container);
             container.appendChild(input);          
         }
 
-        function break_line(container, count=1) {
-            for(var i=0; i < count; i++) {
-                container.appendChild(document.createElement("BR"));
-            }
-        }
-
-        function create_pick_list(options, container, label) {
-            console.log("Hello");
-        }
 
         var pizza_counter = 1;
         const pizza_container = document.getElementById("pizza-container");
@@ -61,15 +63,19 @@
             var heading_text = document.createTextNode("Pizza " + pizza_counter);
             heading.appendChild(heading_text);
             container.appendChild(heading);
-
+            //Add flour input
             var flours = {{flours_json|safe}};
             create_option_list(flours, "dough_flour", container, "Flour type ");
-
             break_line(container);
 
+    	    //Add sauce input
             var sauces = {{sauces_json|safe}};
             create_option_list(sauces, "sauce", container, "Sauce ");
+            break_line(container, 2)
 
+            //Add topping input
+            var toppings = {{toppings_json|safe}};
+            create_option_list(toppings, "toppings", container, "Toppings ", true);
             pizza_container.appendChild(container);
             pizza_counter++;
         })

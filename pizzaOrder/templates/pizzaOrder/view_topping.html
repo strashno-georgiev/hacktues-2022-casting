@@ -1,5 +1,6 @@
 {%extends "pizzaOrder/base.html"%}
 {%block content%}
+    <a href={%url "home"%}>Back to home menu</a><br/>
     {%if none%}
         <h5>There are currently no toppings</h5>
         <a href={%url "add-topping"%}>Add topping</a>

@@ -6,19 +6,19 @@ class Topping(models.Model):
     description = models.CharField(max_length=200, blank=True)
 
 class Sauce(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     description = models.TextField(max_length=200, blank=True)
 
 class Flour(models.Model):
-    grain = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     description = models.CharField(max_length=200, blank=True)
 
 class Pizza(models.Model):
     toppings = models.ManyToManyField("Topping")
-    sauce = models.ForeignKey("Sauce", on_delete=models.CASCADE)
-    dough_flour = models.ForeignKey("Flour", on_delete=models.CASCADE)
-    order = models.ForeignKey("Order", on_delete=models.CASCADE)
+    sauce = models.ForeignKey("Sauce", to_field="name", default="tomato", on_delete=models.CASCADE)
+    dough_flour = models.ForeignKey("Flour", to_field="name", default="white", on_delete=models.CASCADE)
+    order = models.ForeignKey("Order", on_delete=models.CASCADE, null=True)
 
 class Order(models.Model):
-    person = models.ForeignKey("Person", on_delete=models.CASCADE)
     address = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
