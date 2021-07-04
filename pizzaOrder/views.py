@@ -1,22 +1,32 @@
-from pizzaApp.pizzaOrder.models import Person
 from django.shortcuts import render
 from django.http import HttpResponse
-from .forms import PersonForm
-from .models import Person
+from .forms import OrderForm
+from .models import Order, Topping, Flour, Sauce
+import json
+from django.core.serializers.json import DjangoJSONEncoder
+
 # Create your views here.
 def index(request):
     return render(request, "pizzaOrder/index.html")
 
-def create_user(request):
+def create_order(request):
     if(request.method == "POST"):
-        form = PersonForm(request.POST)
+        form = OrderForm(request.POST)
         if(form.is_valid):
             form.save()
     else:
+        flours = Flour.objects.all()
+        flours_json = json.dumps(list(flours), cls=DjangoJSONEncoder)
+
+        sauces = Sauce.objects.all()
+        sauces_json = json.dumps(list(sauces), cls=DjangoJSONEncoder)
         context = {}
-        form = PersonForm()
-        context['form'] = form
-        return render(request, "pizzaOrder/create_user.html", context)
+        order_form = OrderForm()
+        context['order_form'] = order_form
+        context['flours_json'] = flours_json
+        context['sauces_json'] = sauces_json
+
+        return render(request, "pizzaOrder/create_order.html", context)
 
 def create_pizza(request):
     pass
