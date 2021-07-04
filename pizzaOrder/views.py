@@ -100,7 +100,17 @@ def update_topping(request, pk):
     pass
 
 def update_flour(request, pk):
-    pass
+    flour = Flour.objects.get(id=pk)
+    if(request.method == "POST"):
+        form = FlourForm(request.POST)
+        if(form.is_valid):
+            flour.name = request.POST['name']
+            flour.description = request.POST['description']
+            flour.save()
+            return redirect("flour-view")
+    context = {}
+    context['flour'] = flour
+    return render(request, "pizzaOrder/update_flour.html", context)
 
 def update_sauce(request, pk):
     pass
