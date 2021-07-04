@@ -1,7 +1,7 @@
 from django.forms.models import model_to_dict
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from .forms import OrderForm, FlourForm, SauceForm
+from .forms import OrderForm, FlourForm, SauceForm, ToppingForm
 from .models import Order, Topping, Flour, Sauce
 import json
 from django.core.serializers.json import DjangoJSONEncoder
@@ -38,7 +38,12 @@ def create_order(request):
         return render(request, "pizzaOrder/create_order.html", context)
 
 def add_topping(request):
-    pass
+    if(request.method == "POST"):
+        form = ToppingForm(request.POST)
+        if(form.is_valid):
+            form.save()
+            return redirect("topping-view")
+    return render(request, "pizzaOrder/add_topping.html")
 
 def add_flour(request):
     if(request.method == "POST"):
