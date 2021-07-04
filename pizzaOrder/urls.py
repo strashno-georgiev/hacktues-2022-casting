@@ -24,6 +24,14 @@ urlpatterns = [
     path('new-flour/', views.add_flour, name="add-flour"),
     path('new-sauce/', views.add_sauce, name="add-sauce"),
     path('new-topping/', views.add_topping, name="add-topping"),
+    path('delete-flour/<int:pk>', views.delete_flour, name="delete-flour"),
+    path('delete-sauce/<int:pk>', views.delete_sauce, name="delete-sauce"),
+    path('delete-topping/<int:pk>', views.delete_topping, name="delete-topping"),
+    path('update-flour/<int:pk>', views.update_flour, name="update-flour"),
+    path('update-sauce/<int:pk>', views.update_sauce, name="update-sauce"),
+    path('update-topping/<int:pk>', views.update_topping, name="update-topping"),
+
+
 
 
 ]

@@ -95,3 +95,12 @@ def delete_flour(request):
 
 def delete_sauce(request):
     pass
+
+def update_topping(request):
+    pass
+
+def update_flour(request):
+    pass
+
+def update_sauce(request):
+    pass
