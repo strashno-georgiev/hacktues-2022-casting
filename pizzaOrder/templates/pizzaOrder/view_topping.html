@@ -9,6 +9,7 @@
         {%for topping in toppings%}
             <div>
                 <h4>{{topping.name}}</h4>
+                <a style="color:red;" href={% url "delete-topping"%}>Delete topping</a>
                 <p>{{topping.description}}</p>
             </div>
         {%endfor%}

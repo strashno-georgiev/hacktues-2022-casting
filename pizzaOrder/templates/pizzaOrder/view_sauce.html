@@ -9,6 +9,7 @@
         {%for sauce in sauces%}
             <div>
                 <h4>{{sauce.name}}</h4>
+                <a style="color:red;" href={% url "delete-sauce"%}>Delete sauce</a>
                 <p>{{sauce.description}}</p>
             </div>
         {%endfor%}
