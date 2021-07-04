@@ -2,6 +2,7 @@
 {%block content%}
     Are you sure you want to delete {{sauce.name}} sauce?<br/>
     <form method="POST">
+        {%csrf_token%}
         <input type="submit" value="Delete">
         <a href={% url "sauce-view"%}>Cancel</a>
     </form>

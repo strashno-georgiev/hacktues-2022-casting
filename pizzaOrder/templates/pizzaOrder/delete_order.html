@@ -1,6 +1,6 @@
 {%extends "pizzaOrder/base.html"%}
 {%block content%}
-    Are you sure you want to delete {{flour.name}} flour?<br/>
+    Are you sure you want to delete Order no {{order.id}}?<br/>
     <form method="POST">
         {%csrf_token%}
         <input type="submit" value="Delete">

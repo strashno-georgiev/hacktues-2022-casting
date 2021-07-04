@@ -36,20 +36,22 @@
         }
 
 
-        function create_option_list(options, input_name, container, label, multiple=false) {
+        function create_option_list(options, input_name, container, label, pizza_count, multiple=false) {
             var input = document.createElement("SELECT");
-            input.name = input_name;
-            input.id = input_name;
+            input.name = input_name + pizza_count;
+            if(multiple) {
+                input.name += "[]"
+            }
+            input.id = input_name + pizza_count;
             input.multiple = multiple
             for(var i=0; i < options.length; i++) {
                 var option = document.createElement("OPTION");
-                var element = (options[i]).fields.name;
-                option.value = element;
-                var option_text = document.createTextNode(capitalize(element));
+                option.value = options[i].pk;
+                var option_text = document.createTextNode(capitalize(options[i].fields.name));
                 option.appendChild(option_text);
                 input.appendChild(option);
             }
-            add_label(container, input_name, label);
+            add_label(container, input.id, label);
             break_line(container);
             container.appendChild(input);          
         }
@@ -65,17 +67,18 @@
             container.appendChild(heading);
             //Add flour input
             var flours = {{flours_json|safe}};
-            create_option_list(flours, "dough_flour", container, "Flour type ");
+            console.log(flours);
+            create_option_list(flours, "dough_flour", container, "Flour type ", pizza_counter);
             break_line(container);
 
     	    //Add sauce input
             var sauces = {{sauces_json|safe}};
-            create_option_list(sauces, "sauce", container, "Sauce ");
+            create_option_list(sauces, "sauce", container, "Sauce ", pizza_counter);
             break_line(container, 2)
 
             //Add topping input
             var toppings = {{toppings_json|safe}};
-            create_option_list(toppings, "toppings", container, "Toppings ", true);
+            create_option_list(toppings, "toppings", container, "Toppings ", pizza_counter, true);
             pizza_container.appendChild(container);
             pizza_counter++;
         })

@@ -7,8 +7,23 @@
             <li><a href={% url "sauce-view"%}>View/update sauces</a></li>
             <li><a href={% url "flour-view"%}>View/update flours</a></li>
             <li><a href={%url "topping-view"%}>View/update toppings</a></li>
-
-
         <ul>
+        <h4>Current orders:</h4>
+        {%if none%}
+            <p>There are currently no orders</p>
+        {%else%}
+            {%for order, order_details in orders.items%}
+                <h5>Order No {{order}}</h5>
+                <a style="color:red" href={%url "delete-order" pk=order_details.0.id%}>Delete</a><br/>
+                Address: {{order_details.0.address}}<br/>
+                Last name: {{order_details.0.last_name}}<br/>
+                Contents:<br/>
+                <ul>
+                {%for pizza in order_details.1%}
+                    <li>{{pizza.dough_flour.name}} flour, {{pizza.sauce.name}} sauce{% for topping in pizza.toppings.all%}, {{topping.name}} {%endfor%}pizza</li>
+                {%endfor%}
+                </ul>
+            {%endfor%}
+        {%endif%}
     </div>
 {%endblock%}

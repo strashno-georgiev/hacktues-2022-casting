@@ -2,6 +2,7 @@
 {%block content%}
     Are you sure you want to delete {{topping.name}} ?<br/>
     <form method="POST">
+        {%csrf_token%}
         <input type="submit" value="Delete">
         <a href={% url "topping-view"%}>Cancel</a>
     </form>
