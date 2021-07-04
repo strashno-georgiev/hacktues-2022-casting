@@ -1,0 +1,15 @@
+{%extends "pizzaOrder/base.html"%}
+{%block content%}
+    {%if none%}
+        <h5>There are currently no flours</h5>
+        <a href={%url "add-flour"%}>Add flour</a>
+    {%else%}
+        <a href={%url "add-flour"%}>Add flour</a>
+        {%for flour in flours%}
+            <div>
+                <h4>{{flour.name}}</h4>
+                <p>{{flour.description}}</p>
+            </div>
+        {%endfor%}
+    {%endif%}
+{%endblock content%}

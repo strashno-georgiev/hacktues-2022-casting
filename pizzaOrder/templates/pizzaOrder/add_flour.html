@@ -1,0 +1,11 @@
+{% extends "pizzaOrder/base.html"%}
+{%block content%}
+    <form method="POST" action="">
+        {%csrf_token%}
+        Flour type:
+        <input name="name" type="text" required maxlength="50">
+        <br/>
+        <textarea name="description" rows="4" cols="50">Enter description here</textarea>
+        <input type="submit">
+    </form>
+{%endblock%}

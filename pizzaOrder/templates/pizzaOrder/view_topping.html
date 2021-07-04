@@ -1,0 +1,15 @@
+{%extends "pizzaOrder/base.html"%}
+{%block content%}
+    {%if none%}
+        <h5>There are currently no toppings</h5>
+        <a href={%url "add-topping"%}>Add topping</a>
+    {%else%}
+        <a href={%url "add-topping"%}>Add topping</a>
+        {%for topping in toppings%}
+            <div>
+                <h4>{{topping.name}}</h4>
+                <p>{{topping.description}}</p>
+            </div>
+        {%endfor%}
+    {%endif%}
+{%endblock content%}

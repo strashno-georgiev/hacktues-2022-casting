@@ -33,7 +33,7 @@
             input.multiple = multiple
             for(var i=0; i < options.length; i++) {
                 var option = document.createElement("OPTION");
-                var element = options[i].name;
+                var element = (options[i]).fields.name;
                 option.value = element;
                 var option_text = document.createTextNode(capitalize(element));
                 option.appendChild(option_text);
@@ -50,7 +50,7 @@
         }
 
         function create_pick_list(options, container, label) {
-            
+            console.log("Hello");
         }
 
         var pizza_counter = 1;
@@ -62,13 +62,13 @@
             heading.appendChild(heading_text);
             container.appendChild(heading);
 
-            var flours = "{{flours_json}}";
-            create_option_list(JSON.parse(flours), "flour_type", container, "Flour type ");
+            var flours = {{flours_json|safe}};
+            create_option_list(flours, "dough_flour", container, "Flour type ");
 
-            break_line(container)
+            break_line(container);
 
-            var sauces = "{{sauces_json}}";
-            create_option_list(JSON.parse(sauces), "sauce_type", container, "Sauce ");
+            var sauces = {{sauces_json|safe}};
+            create_option_list(sauces, "sauce", container, "Sauce ");
 
             pizza_container.appendChild(container);
             pizza_counter++;
