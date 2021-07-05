@@ -43,7 +43,7 @@ def create_order(request):
                 new_pizza.save()
                 print("\nrequest.POST on toppings is:\n" + request.POST['toppings1[]'])
 
-                for topping_id in request.POST['toppings' + str(i) + "[]"]:
+                for topping_id in request.POST.getlist('toppings' + str(i) + "[]"):
                     new_pizza.toppings.add(topping_id)
 
             return redirect("home")
