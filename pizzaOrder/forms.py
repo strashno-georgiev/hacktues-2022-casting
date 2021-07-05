@@ -28,11 +28,6 @@ class SauceForm(forms.ModelForm):
             "name",
             "description"
         ]
-class ToppingsSelectForm(forms.Form):
-    OPTIONS = []
-    for topping in Topping.objects.all():
-        OPTIONS.append((topping.id, topping.name))
-    toppings = forms.MultipleChoiceField(widget=forms.SelectMultiple, choices=OPTIONS)
 
 class ToppingForm(forms.ModelForm):
   

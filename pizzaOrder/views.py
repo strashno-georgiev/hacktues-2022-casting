@@ -2,7 +2,7 @@ from django.db.models.query import QuerySet
 from django.forms.models import model_to_dict
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
-from .forms import OrderForm, FlourForm, SauceForm, ToppingForm, ToppingsSelectForm
+from .forms import OrderForm, FlourForm, SauceForm, ToppingForm
 from .models import Order, Topping, Flour, Sauce, Pizza
 import json
 from django.core.serializers.json import DjangoJSONEncoder
@@ -54,9 +54,7 @@ def create_order(request):
         
         context = {}
         order_form = OrderForm()
-        toppings_form = ToppingsSelectForm()
         context['order_form'] = order_form
-        context['toppings_form'] = toppings_form
         context['flours_json'] = objects_to_json(Flour.objects.all())
         context['sauces_json'] = objects_to_json(Sauce.objects.all())
         context['toppings_json'] = objects_to_json(Topping.objects.all())
